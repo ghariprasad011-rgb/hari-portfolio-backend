@@ -1082,6 +1082,32 @@
     font-size: clamp(24px, 3vw, 42px);
 }
 
+/* Mobile Responsive Fix */
+@media screen and (max-width: 768px) {
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    img, video, iframe {
+        max-width: 100%;
+    }
+
+    .container,
+    .section,
+    main,
+    header,
+    footer {
+        max-width: 100%;
+    }
+}
+
 
     </style>
 </head>

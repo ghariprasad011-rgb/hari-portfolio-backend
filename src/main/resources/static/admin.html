@@ -1297,6 +1297,10 @@ document.querySelectorAll("[data-go]").forEach(button => {
             // Ensure the category is correct for the selected upload form.
             formData.set("category", category);
 
+            if (category === "CERTIFICATE") {
+    formData.set("publicVisible", "true");
+}
+
             const file = formData.get("file");
 
             if (!(file instanceof File) || file.size === 0) {

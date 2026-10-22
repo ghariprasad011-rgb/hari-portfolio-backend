@@ -1,0 +1,1912 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080e1a">
+
+    <title>Hari Prasad G | Portfolio</title>
+
+    <meta name="description"
+          content="Hari Prasad G - Computer Science and Engineering student, Java developer, and software project builder.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #080e1a;
+            --panel: #111b2c;
+            --panel-light: #18253a;
+            --text: #edf2fa;
+            --muted: #a0aec2;
+            --gold: #f5c542;
+            --border: #29374d;
+            --success: #4ade80;
+            --radius: 16px;
+            --max-width: 1120px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", Arial, sans-serif;
+            background:
+                radial-gradient(ellipse at top left,
+                    rgba(245, 197, 66, 0.07), transparent 35%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(var(--max-width), 90%);
+            margin: auto;
+        }
+
+        .gold {
+            color: var(--gold);
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .section {
+            padding: 90px 0;
+            scroll-margin-top: 85px;
+        }
+
+        .section-heading {
+            margin-bottom: 38px;
+        }
+
+        .section-label {
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            line-height: 1.25;
+            margin: 8px 0 12px;
+        }
+
+        .section-description {
+            max-width: 650px;
+            color: var(--muted);
+        }
+
+        .card {
+            background: linear-gradient(
+                145deg,
+                rgba(24, 37, 58, 0.88),
+                rgba(17, 27, 44, 0.96)
+            );
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 25px;
+            transition: transform 0.25s ease,
+                        border-color 0.25s ease,
+                        box-shadow 0.25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(245, 197, 66, 0.65);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* NAVIGATION */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(8, 14, 26, 0.93);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .brand {
+            color: var(--gold);
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: var(--gold);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 690px;
+            display: flex;
+            align-items: center;
+            padding: 90px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 197, 66, 0.12);
+            right: -130px;
+            top: 80px;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 1px solid rgba(245, 197, 66, 0.09);
+            right: -80px;
+            top: 130px;
+            pointer-events: none;
+        }
+
+        
+/* Balanced hero layout */
+ 
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.7fr;
+    align-items: center;
+    gap: 35px;
+}
+
+
+
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 7px 13px;
+            border: 1px solid var(--border);
+            background: rgba(17, 27, 44, 0.8);
+            border-radius: 30px;
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-bottom: 25px;
+        }
+
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.6rem, 6vw, 4.6rem);
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero-role {
+            font-size: clamp(1.05rem, 2.5vw, 1.4rem);
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
+        .hero-description {
+            max-width: 620px;
+            color: var(--muted);
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 12px 20px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease,
+                        background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: #080e1a;
+            border-color: var(--gold);
+        }
+
+        .btn-secondary {
+            background: rgba(17, 27, 44, 0.8);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+        }
+
+        .hero-panel {
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            background: var(--panel-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 0 45px rgba(245, 197, 66, 0.09);
+        }
+
+        .hero-panel h2 {
+            font-size: 1.35rem;
+            margin-bottom: 5px;
+        }
+
+        .hero-panel p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 22px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 11px;
+            background: rgba(245, 197, 66, 0.07);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            border-radius: 7px;
+            color: var(--gold);
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        /* ABOUT */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 25px;
+        }
+
+        .about-text p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .info-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .info-icon {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            background: rgba(245, 197, 66, 0.08);
+            border: 1px solid rgba(245, 197, 66, 0.18);
+            border-radius: 10px;
+            font-size: 1.15rem;
+        }
+
+        .info-item h3 {
+            font-size: 0.98rem;
+            margin-bottom: 3px;
+        }
+
+        .info-item p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            overflow-wrap: anywhere;
+        }
+
+        /* EDUCATION */
+
+        .education-card {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .education-icon {
+            width: 55px;
+            height: 55px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            background: rgba(245, 197, 66, 0.09);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            border-radius: 13px;
+            font-size: 1.5rem;
+        }
+
+        .education-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 7px;
+        }
+
+        .education-card p {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .education-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(245, 197, 66, 0.08);
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        /* SKILLS */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            min-height: 170px;
+        }
+
+        .skill-icon {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .skill-card h3 {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .skill-card p {
+            color: var(--muted);
+            font-size: 0.87rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        /* PROJECTS */
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            min-height: 270px;
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .project-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: rgba(245, 197, 66, 0.09);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        .project-number {
+            color: #65748b;
+            font-size: 0.85rem;
+            font-weight: 800;
+        }
+
+        .project-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 18px;
+        }
+
+        .project-card .skill-tags {
+            margin-top: auto;
+        }
+
+        /* CERTIFICATES */
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .certificate-card {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .certificate-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(245, 197, 66, 0.09);
+            border: 1px solid rgba(245, 197, 66, 0.2);
+            border-radius: 12px;
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        .certificate-card h3 {
+            font-size: 1rem;
+            overflow-wrap: anywhere;
+        }
+
+        .certificate-card p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            overflow-wrap: anywhere;
+        }
+
+        .certificate-link {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.88rem;
+            margin-top: auto;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--muted);
+            padding: 35px 20px;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius);
+        }
+
+        /* CONTACT */
+
+        .contact-panel {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .contact-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .contact-panel p {
+            color: var(--muted);
+        }
+
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(8, 14, 26, 0.35);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.2s ease;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-link:hover {
+            border-color: var(--gold);
+        }
+
+        .contact-link-icon {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        .contact-link strong {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .contact-link small {
+            color: var(--muted);
+            font-size: 0.75rem;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 28px 0;
+            background: rgba(8, 14, 26, 0.65);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer p {
+            color: var(--muted);
+            font-size: 0.84rem;
+        }
+
+        .back-to-top {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .status-message {
+            color: var(--muted);
+            font-size: 0.82rem;
+            margin-top: 12px;
+        }
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr 0.75fr;
+                gap: 25px;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .certificates-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.82rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .section {
+                padding: 65px 0;
+            }
+
+            .nav-inner {
+                min-height: 68px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 68px;
+                left: 0;
+                right: 0;
+                padding: 18px 5%;
+                background: #0c1423;
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 12px 0;
+                font-size: 0.95rem;
+                border-bottom: 1px solid rgba(41, 55, 77, 0.5);
+            }
+
+            .nav-links a:last-child {
+                border-bottom: none;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 65px 0;
+            }
+
+            .hero-grid,
+            .about-grid,
+            .contact-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-grid {
+                gap: 35px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1.2px;
+            }
+
+            .hero-panel {
+                max-width: 430px;
+                width: 100%;
+                margin: auto;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                grid-template-columns: 1fr;
+            }
+
+            .education-card {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 92%;
+            }
+
+            .skills-grid,
+            .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 21px;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .profile-avatar {
+                width: 125px;
+                height: 125px;
+                font-size: 2.5rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                transition: none !important;
+            }
+        }
+
+        
+/* PORTFOLIO LAYOUT FIX */
+.container {
+    width: 90%;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    display: block;
+    width: 100%;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 25px;
+    align-items: stretch;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-items: stretch;
+}
+
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+.contact-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 30px;
+    align-items: center;
+}
+
+
+
+/* ======================================
+   COMPACT PORTFOLIO.JS CODE CARD
+====================================== */
+
+.code-profile-card {
+    width: 100%;
+    max-width: 400px;
+    justify-self: end;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    background: #101827;
+    border: 1px solid #394765;
+    border-radius: 12px;
+    text-align: left;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    transition: border-color 0.25s ease;
+}
+
+.code-profile-card:hover {
+    border-color: #f5c542;
+}
+
+/* Title bar */
+
+.code-window-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 8px 12px;
+    background: #202b40;
+    border-bottom: 1px solid #394765;
+}
+
+.code-window-dots {
+    display: flex;
+    gap: 5px;
+}
+
+.code-window-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.code-window-dots span:nth-child(1) {
+    background: #ff6b81;
+}
+
+.code-window-dots span:nth-child(2) {
+    background: #ffd166;
+}
+
+.code-window-dots span:nth-child(3) {
+    background: #06d6a0;
+}
+
+.code-filename {
+    flex: 1;
+    color: #e2e8f0;
+    font: 12px Consolas, monospace;
+}
+
+.code-file-icon {
+    color: #ffd166;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Code area */
+
+.code-content {
+    padding: 8px 10px 0;
+    color: #dbeafe;
+    font: 12px/1.45 Consolas, "Courier New", monospace;
+}
+
+.code-line {
+    display: flex;
+    align-items: baseline;
+    white-space: pre;
+}
+
+.line-number {
+    flex: 0 0 28px;
+    padding-right: 9px;
+    color: #718096;
+    text-align: right;
+    user-select: none;
+}
+
+/* Original Hero Profile Card */
+.hero-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 35px 25px;
+    border-radius: 20px;
+}
+
+/* Circular HP Avatar */
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    background: linear-gradient(135deg, #efef08, hsl(60, 88%, 44%));
+    color: #101827;
+
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 2px;
+
+    border: 4px solid rgba(245, 197, 66, 0.25);
+    box-shadow: 0 0 25px rgba(245, 197, 66, 0.2);
+
+    margin-bottom: 22px;
+}
+
+/* Name */
+.profile-name {
+    color: #f5c542;
+    font-size: 25px;
+    font-weight: 700;
+    margin: 0 0 10px;
+}
+
+/* Department */
+.profile-department {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0 0 22px;
+}
+
+/* Skill Tags */
+.profile-skills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.skill-tag {
+    padding: 8px 14px;
+    border-radius: 20px;
+
+    background: rgba(245, 197, 66, 0.10);
+    border: 1px solid rgba(245, 197, 66, 0.35);
+
+    color: #f5c542;
+    font-size: 13px;
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+.skill-tag:hover {
+    background: #f5c542;
+    color: #101827;
+    transform: translateY(-2px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .hero-panel {
+        padding: 28px 18px;
+        margin-top: 25px;
+    }
+
+    .profile-avatar {
+        width: 90px;
+        height: 90px;
+        font-size: 30px;
+    }
+
+    .profile-name {
+        font-size: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skill-tag {
+        transition: none;
+    }
+}
+
+/* Keep the Hero heading on one line */
+.hero-content h1 {
+    white-space: nowrap;
+    font-size: clamp(24px, 3vw, 42px);
+}
+
+
+    </style>
+</head>
+
+<body>
+    <!-- NAVIGATION -->
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="brand">HARI PRASAD . G</a>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+                aria-controls="navLinks">
+                ☰
+            </button>
+
+            <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#certificates">Certificates</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+
+                <div class="hero-content">
+                    <div class="availability">
+                        <span class="availability-dot"></span>
+                        Computer Science & Engineering Student
+                    </div>
+
+                    <h1>
+                        Hi, I'm <span class="gold" id="heroName">Hari Prasad . G</span>
+                    </h1>
+
+                    <p class="hero-role" id="heroRole">
+                        Aspiring Software Developer
+                    </p>
+
+                    <p class="hero-description" id="heroIntroduction">
+                        I am a Computer Science and Engineering student interested
+                        in Java development, data structures, databases, and
+                        building practical software projects.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary">
+                            View My Projects ↗
+                        </a>
+
+                        <a href="#contact" class="btn btn-secondary">
+                            Contact Me
+                        </a>
+                    </div>
+
+                    <p class="status-message" id="profileStatus"
+                       role="status" aria-live="polite"></p>
+                </div>
+
+                                <div class="hero-panel card">
+                    <div class="profile-avatar" aria-label="Profile initials">
+                        HP
+                    </div>
+
+                    <h2 id="panelName">Hari Prasad . G</h2>
+                    <p>Computer Science & Engineering</p>
+
+                    <div class="hero-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">DSA</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Spring Boot</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section" id="about">
+<!-- ABOUT -->
+<section class="section" id="about">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-label">Introduction</span>
+            <h2 class="section-title">About <span class="gold">Me</span></h2>
+            <p class="section-description">
+                A little about my education, interests, and development journey.
+            </p>
+        </div>
+
+        <div class="about-grid">
+
+            <!-- ABOUT TEXT CARD -->
+            <div class="card about-text">
+
+                <h3 class="gold" style="margin-bottom: 15px;">
+                    My Journey
+                </h3>
+
+                <!-- Existing introduction from the profile API -->
+                <p id="aboutIntroduction">
+                    I am a Computer Science and Engineering student who
+                    enjoys learning programming concepts and applying them
+                    to real-world problems.
+                </p>
+
+                <!-- Editable About Me content -->
+                <p id="aboutDescription">
+                    I am a second-year B.E. Computer Science and Engineering
+                    student interested in software development, problem-solving,
+                    and building useful applications. I am developing my skills
+                    in Java, data structures and algorithms, databases, and
+                    backend development.
+                </p>
+
+                <!-- Editable Current Learning Focus content -->
+                <p>
+                    <strong class="gold">Current Learning Focus:</strong>
+                    <span id="currentFocus">
+                        Currently learning Java, Data Structures and Algorithms,
+                        MySQL, DBMS, and Spring Boot. Practicing coding problems
+                        and building projects to strengthen my programming skills.
+                    </span>
+                </p>
+
+            </div>
+
+            <!-- EDUCATION AND INFORMATION CARD -->
+            <div class="card">
+                <div class="info-list">
+
+                    <div class="info-item">
+                        <div class="info-icon">⌂</div>
+                        <div>
+                            <h3>Education</h3>
+                            <p id="aboutEducation">
+                                B.E. Computer Science and Engineering
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">▤</div>
+                        <div>
+                            <h3>College</h3>
+                            <p id="aboutCollege">
+                                Sri Krishna College of Engineering and Technology
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">⌘</div>
+                        <div>
+                            <h3>Primary Language</h3>
+                            <p>Java</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">✧</div>
+                        <div>
+                            <h3>Interests</h3>
+                            <p>
+                                Software Development, DSA, Databases, Technology
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+        <!-- EDUCATION -->
+        <section class="section" id="education">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Academic Background</span>
+                    <h2 class="section-title">My <span class="gold">Education</span></h2>
+                    <p class="section-description">
+                        My academic foundation in computing and software development.
+                    </p>
+                </div>
+
+                <div class="card education-card">
+                    <div class="education-icon">▤</div>
+
+                    <div>
+                        <h3 id="educationDegree">
+                            B.E. Computer Science and Engineering
+                        </h3>
+
+                        <p id="educationCollege">
+                            Sri Krishna College of Engineering and Technology
+                        </p>
+
+                        <p>
+                            Learning programming, algorithms, databases,
+                            computer systems, and software engineering.
+                        </p>
+
+                        <span class="education-badge">
+                            Undergraduate
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section> 
+
+        <!-- SKILLS -->
+       
+<section class="section" id="skills">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-label">Technical Toolkit</span>
+            <h2 class="section-title">My <span class="gold">Skills</span></h2>
+            <p class="section-description">
+                Technologies and concepts I am learning and applying in projects.
+            </p>
+        </div>
+
+        <!-- Skills will be loaded from the database -->
+        <div class="skills-grid" id="publicSkillsGrid">
+            <div class="empty-state">Loading skills...</div>
+        </div>
+
+    </div>
+</section>
+
+
+        <!-- PROJECTS -->
+       
+<section class="section" id="projects">
+    <div class="container">
+
+        <div class="section-heading">
+            <span class="section-label">Practical Experience</span>
+            <h2 class="section-title">My <span class="gold">Projects</span></h2>
+            <p class="section-description">
+                Projects that help me apply programming, database,
+                and software development concepts.
+            </p>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+            <div class="empty-state">Loading projects...</div>
+        </div>
+
+    </div>
+</section>
+
+
+        <!-- CERTIFICATES -->
+        <section class="section" id="certificates">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Achievements</span>
+                    <h2 class="section-title">My <span class="gold">Certificates</span></h2>
+                    <p class="section-description">
+                        Certificates and learning achievements I want to showcase.
+                    </p>
+                </div>
+
+                <div class="certificates-grid" id="certificatesGrid">
+                    <div class="empty-state">
+                        <div class="certificate-icon"
+                             style="margin: 0 auto 15px;">▤</div>
+                        <h3 style="margin-bottom: 8px;">Certificates</h3>
+                        <p>
+                            Uploaded certificate files will be displayed here
+                            once the public certificate-list API is connected.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section" id="contact">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span class="section-label">Get In Touch</span>
+                    <h2 class="section-title">Let's <span class="gold">Connect</span></h2>
+                    <p class="section-description">
+                        Find my developer profiles and explore my work.
+                    </p>
+                </div>
+
+                <div class="card contact-panel">
+                    <div>
+                        <h3>Connect with me</h3>
+                        <p>
+                            I am interested in learning, collaborating on projects,
+                            and connecting with people in technology.
+                        </p>
+                    </div>
+
+                    <div class="contact-links">
+
+                        <a class="contact-link"
+                           id="githubLink"
+                           href="https://github.com/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="contact-link-icon">⌘</span>
+                            <span>
+                                <strong>GitHub</strong>
+                                <small>Explore my code</small>
+                            </span>
+                        </a>
+
+                        <a class="contact-link"
+                           id="linkedinLink"
+                           href="https://www.linkedin.com/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="contact-link-icon">in</span>
+                            <span>
+                                <strong>LinkedIn</strong>
+                                <small>Professional profile</small>
+                            </span>
+                        </a>
+
+                        <a class="contact-link"
+                           id="leetcodeLink"
+                           href="https://leetcode.com/"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            <span class="contact-link-icon">◇</span>
+                            <span>
+                                <strong>LeetCode</strong>
+                                <small>Problem-solving practice</small>
+                            </span>
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <p>
+                © <span id="currentYear"></span>
+                <span id="footerName">Hari Prasad . G</span>.
+                Built with passion for technology.
+            </p>
+
+            <a class="back-to-top" href="#home">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script>
+        "use strict";
+
+        const API_BASE = "";
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        document.getElementById("currentYear").textContent =
+            new Date().getFullYear();
+
+        // MOBILE NAVIGATION
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        document.querySelectorAll("#navLinks a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation menu");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // SAFELY UPDATE TEXT CONTENT
+        function setText(id, value) {
+            const element = document.getElementById(id);
+
+            if (element && typeof value === "string" && value.trim()) {
+                element.textContent = value;
+            }
+        }
+
+        // ONLY ACCEPT HTTP/HTTPS LINKS
+        function setSafeLink(id, value, fallback) {
+            const element = document.getElementById(id);
+
+            if (!element) {
+                return;
+            }
+
+            try {
+                const url = new URL(value || fallback);
+
+                if (url.protocol === "https:" || url.protocol === "http:") {
+                    element.href = url.href;
+                } else {
+                    element.href = fallback;
+                }
+            } catch (error) {
+                element.href = fallback;
+            }
+        }
+
+        // LOAD PROFILE SAVED THROUGH THE SPRING BOOT BACKEND
+        async function loadPublicProfile() {
+            const status = document.getElementById("profileStatus");
+
+            try {
+                const response = await fetch(
+                    API_BASE + "/api/public/profile",
+                    {
+                        method: "GET",
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Profile API returned status " + response.status
+                    );
+                }
+
+                const profile = await response.json();
+
+                document.getElementById("aboutDescription").textContent =
+    profile.aboutDescription || "";
+
+document.getElementById("currentFocus").textContent =
+    profile.currentFocus || "";
+
+                if (!profile || typeof profile !== "object") {
+                    throw new Error("Invalid profile response");
+                }
+
+                const name = profile.fullName || "Hari Prasad . G";
+
+                setText("heroName", name);
+                setText("panelName", name);
+                setText("footerName", name);
+
+                setText(
+                    "heroIntroduction",
+                    profile.introduction
+                );
+
+                setText(
+                    "aboutIntroduction",
+                    profile.introduction
+                );
+
+                setText(
+                    "aboutEducation",
+                    profile.education
+                );
+
+                setText(
+                    "educationDegree",
+                    profile.education
+                );
+
+                setText(
+                    "aboutCollege",
+                    profile.college
+                );
+
+                setText(
+                    "educationCollege",
+                    profile.college
+                );
+
+                setSafeLink(
+                    "githubLink",
+                    profile.githubUrl,
+                    "https://github.com/"
+                );
+
+                setSafeLink(
+                    "linkedinLink",
+                    profile.linkedinUrl,
+                    "https://www.linkedin.com/"
+                );
+
+                setSafeLink(
+                    "leetcodeLink",
+                    profile.leetcodeUrl,
+                    "https://leetcode.com/"
+                );
+
+                if (status) {
+                    status.textContent = "";
+                }
+
+            } catch (error) {
+                console.error("Could not load public profile:", error);
+
+                if (status) {
+                    status.textContent =
+                        "Showing default portfolio information. " +
+                        "Saved profile details could not be loaded.";
+                }
+            }
+        }
+
+        // INITIALIZE PAGE
+        loadPublicProfile();
+
+        
+async function loadProjects() {
+    const grid = document.getElementById("projectsGrid");
+    if (!grid) return;
+
+    try {
+        const response = await fetch("/api/public/projects");
+
+        if (!response.ok) {
+            throw new Error("Projects API: HTTP " + response.status);
+        }
+
+        const projects = await response.json();
+        grid.innerHTML = "";
+
+        if (!Array.isArray(projects) || projects.length === 0) {
+            grid.innerHTML =
+                '<div class="empty-state">No projects available yet.</div>';
+            return;
+        }
+
+        projects.forEach((project, index) => {
+            const card = document.createElement("article");
+            card.className = "card project-card";
+
+            const top = document.createElement("div");
+            top.className = "project-top";
+
+            const icon = document.createElement("div");
+            icon.className = "project-icon";
+            icon.textContent = "⌁";
+
+            const number = document.createElement("span");
+            number.className = "project-number";
+            number.textContent =
+                "PROJECT " + String(index + 1).padStart(2, "0");
+
+            top.append(icon, number);
+
+            const title = document.createElement("h3");
+            title.textContent = project.title || "Untitled Project";
+
+            const description = document.createElement("p");
+            description.textContent = project.description || "";
+
+            const tags = document.createElement("div");
+            tags.className = "skill-tags";
+
+            if (project.technologies) {
+                project.technologies
+                    .split(",")
+                    .map(item => item.trim())
+                    .filter(Boolean)
+                    .forEach(technology => {
+                        const tag = document.createElement("span");
+                        tag.className = "tag";
+                        tag.textContent = technology;
+                        tags.appendChild(tag);
+                    });
+            }
+
+            card.append(top, title, description, tags);
+
+            if (project.githubUrl) {
+                const link = document.createElement("a");
+                link.className = "certificate-link";
+                link.href = project.githubUrl;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                link.textContent = "View on GitHub →";
+                card.appendChild(link);
+            }
+
+            grid.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Could not load projects:", error);
+        grid.innerHTML =
+            '<div class="empty-state">Unable to load projects.</div>';
+    }
+}
+
+loadProjects();
+
+
+async function loadCertificates() {
+    const grid = document.getElementById("certificatesGrid");
+
+    if (!grid) return;
+
+    grid.innerHTML =
+        '<div class="empty-state">Loading certificates...</div>';
+
+    try {
+        const response = await fetch("/api/admin/media/public");
+
+        if (!response.ok) {
+            throw new Error(
+                `Failed to load media: HTTP ${response.status}`
+            );
+        }
+
+        const mediaItems = await response.json();
+
+        const certificates = mediaItems.filter(item =>
+            item.category === "CERTIFICATE"
+        );
+
+        grid.innerHTML = "";
+
+        if (certificates.length === 0) {
+            grid.innerHTML =
+                '<div class="empty-state">No certificates available yet.</div>';
+            return;
+        }
+
+        certificates.forEach(certificate => {
+            const card = document.createElement("article");
+            card.className = "certificate-card";
+
+            const icon = document.createElement("div");
+            icon.className = "certificate-icon";
+            icon.setAttribute("aria-hidden", "true");
+            icon.textContent =
+                certificate.contentType === "application/pdf"
+                    ? "PDF"
+                    : "▤";
+
+            const title = document.createElement("h3");
+            title.textContent =
+                certificate.title || certificate.originalFileName;
+
+            const description = document.createElement("p");
+            description.textContent =
+                certificate.originalFileName || "";
+
+            const link = document.createElement("a");
+            link.className = "certificate-link";
+
+            // Use the file URL returned by Spring Boot.
+            link.href = certificate.fileUrl;
+            link.target = "_blank";
+            link.rel = "noopener noreferrer";
+            link.textContent =
+                certificate.contentType === "application/pdf"
+                    ? "View PDF →"
+                    : "View Certificate →";
+
+            card.append(icon, title, description, link);
+            grid.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Certificate loading error:", error);
+
+        grid.innerHTML =
+            '<div class="empty-state">Unable to load certificates. Check the browser console.</div>';
+    }
+}
+
+document.addEventListener("DOMContentLoaded", loadCertificates);
+
+
+async function loadPublicSkills() {
+    const grid = document.getElementById("publicSkillsGrid");
+
+    if (!grid) return;
+
+    grid.textContent = "Loading skills...";
+
+    try {
+        const response = await fetch("/api/public/skills", {
+            headers: {
+                "Accept": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Skills API returned HTTP " + response.status);
+        }
+
+        const skills = await response.json();
+
+        if (!Array.isArray(skills)) {
+            throw new Error("Invalid skills response");
+        }
+
+        grid.replaceChildren();
+
+        if (skills.length === 0) {
+            grid.textContent = "No skills added yet.";
+            return;
+        }
+
+        // Group skills by their category
+        const groups = new Map();
+
+        skills
+            .sort((a, b) =>
+                (a.displayOrder ?? 0) - (b.displayOrder ?? 0)
+            )
+            .forEach(skill => {
+                const category = skill.category || "Other";
+
+                if (!groups.has(category)) {
+                    groups.set(category, []);
+                }
+
+                groups.get(category).push(skill);
+            });
+
+        const icons = {
+            "Programming Languages": "⌘",
+            "Database": "▤",
+            "Web Development": "◇",
+            "Frameworks": "⚙",
+            "Tools": "⌁",
+            "Core Computer Science": "⌘",
+            "Other": "✦"
+        };
+
+        const descriptions = {
+            "Programming Languages":
+                "Programming fundamentals and language concepts.",
+            "Database":
+                "Database technologies and data management.",
+            "Web Development":
+                "Building websites and web applications.",
+            "Frameworks":
+                "Frameworks for developing software applications.",
+            "Tools":
+                "Tools for writing, testing, and managing code.",
+            "Core Computer Science":
+                "Computer science fundamentals and problem-solving.",
+            "Other":
+                "Additional technical skills and knowledge."
+        };
+
+        groups.forEach((categorySkills, category) => {
+            const card = document.createElement("article");
+            card.className = "card skill-card";
+
+            const icon = document.createElement("div");
+            icon.className = "skill-icon";
+            icon.textContent = icons[category] || "✦";
+
+            const heading = document.createElement("h3");
+            heading.textContent = category;
+
+            const description = document.createElement("p");
+            description.textContent =
+                descriptions[category] ||
+                "Technical skills and related technologies.";
+
+            const tags = document.createElement("div");
+            tags.className = "skill-tags";
+
+            categorySkills.forEach(skill => {
+                const tag = document.createElement("span");
+                tag.className = "tag";
+                tag.textContent = skill.name || "Unnamed skill";
+                tags.appendChild(tag);
+            });
+
+            card.append(icon, heading, description, tags);
+            grid.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error("Unable to load public skills:", error);
+        grid.textContent = "Unable to load skills. Please try again later.";
+    }
+}
+
+loadPublicSkills();
+    </script>
+
+</body>
+</html>

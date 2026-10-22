@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Hari's Portfolio</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            color: #f5f7fa;
+            background: #07111f;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 390px;
+            padding: 32px;
+            background: #101d30;
+            border: 1px solid #293950;
+            border-radius: 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            text-align: center;
+            color: #f5c542;
+        }
+
+        .subtitle {
+            margin: 0 0 28px;
+            text-align: center;
+            color: #b8c3d3;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            color: #fff;
+            background: #07111f;
+            border: 1px solid #40516a;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #f5c542;
+            border-color: #f5c542;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px;
+            color: #07111f;
+            background: #f5c542;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        #message {
+            margin-top: 16px;
+            text-align: center;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 22px;
+            text-align: center;
+            color: #f5c542;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-card">
+        <h1>Admin Login</h1>
+        <p class="subtitle">Manage your portfolio</p>
+
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button id="loginButton" type="submit">
+                Login
+            </button>
+
+            <p id="message" role="status" aria-live="polite"></p>
+        </form>
+
+        <a class="back-link" href="/">Back to portfolio</a>
+    </main>
+
+    <script>
+        const form = document.getElementById("loginForm");
+        const button = document.getElementById("loginButton");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            button.disabled = true;
+            message.textContent = "Checking login...";
+            message.style.color = "#f5c542";
+
+            const username =
+                document.getElementById("username").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            try {
+                const response = await fetch("/api/users/login", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    message.style.color = "#ff8b8b";
+                    message.textContent =
+                        data.message || "Login failed. Check the server logs.";
+                    return;
+                }
+
+                if (String(data.role || "").toUpperCase() !== "ADMIN") {
+                    message.style.color = "#ff8b8b";
+                    message.textContent =
+                        "The server did not confirm administrator access.";
+                    return;
+                }
+
+                message.style.color = "#8ee6a2";
+                message.textContent = "Login successful. Opening dashboard...";
+
+                window.location.replace("/admin.html");
+
+            } catch (error) {
+                message.style.color = "#ff8b8b";
+                message.textContent =
+                    "Cannot connect to the server. Make sure Spring Boot is running.";
+            } finally {
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

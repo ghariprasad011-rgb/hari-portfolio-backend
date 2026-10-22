@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hari Prasad | Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: #07111f;
+
+            color: white;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+
+            padding: 20px;
+        }
+
+        .login-card {
+            padding: 40px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.12);
+
+            border-radius: 20px;
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            text-align: center;
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #f5c542;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #aeb9c9;
+
+            margin-bottom: 35px;
+        }
+
+        .login-card h2 {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #d7deea;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            margin-bottom: 20px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
+
+            border-radius: 8px;
+
+            color: white;
+
+            font-size: 16px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #f5c542;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 5px;
+
+            background: #f5c542;
+
+            color: #07111f;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-button {
+            margin-top: 12px;
+
+            background: transparent;
+
+            color: white;
+
+            border:
+                1px solid #f5c542;
+        }
+
+        .register-button:hover {
+            background: #f5c542;
+
+            color: #07111f;
+        }
+
+        #message {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #f5c542;
+        }
+
+        .footer-text {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #7f8da3;
+
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <div class="logo">
+                Hari Prasad
+            </div>
+
+            <p class="subtitle">
+                Computer Science & Engineering
+            </p>
+
+
+            <h2>
+                Welcome Back
+            </h2>
+
+
+            <!-- Username -->
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter your username"
+            >
+
+
+            <!-- Password -->
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+            >
+
+
+            <!-- Login -->
+
+            <button onclick="login()">
+                Login
+            </button>
+
+
+            <!-- Register -->
+
+            <button
+                class="register-button"
+                onclick="register()">
+                Register
+            </button>
+
+
+            <p id="message"></p>
+
+
+            <p class="footer-text">
+                © 2026 Hari Prasad
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+
+        // =========================
+        // LOGIN
+        // =========================
+
+       
+async function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+    const message = document.getElementById("message");
+
+    try {
+        const response = await fetch("/api/users/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        message.textContent = data.message;
+
+        if (response.ok && data.role === "ADMIN") {
+            window.location.href = "/admin.html";
+        } else if (response.ok) {
+            message.textContent =
+                "Login successful, but this account is not an admin.";
+        }
+    } catch (error) {
+        message.textContent =
+            "Unable to connect to the server. Please try again.";
+    }
+}
+
+
+
+        // =========================
+        // REGISTER
+        // =========================
+
+        async function register() {
+
+            const username =
+                document.getElementById("username").value;
+
+            const password =
+                document.getElementById("password").value;
+
+
+            if (username === "" || password === "") {
+
+                document.getElementById("message").innerText =
+                    "Please enter username and password.";
+
+                return;
+            }
+
+
+            const response = await fetch(
+                "/api/users",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                }
+            );
+
+
+            if (response.ok) {
+
+                document.getElementById("message").innerText =
+                    "Registration successful!";
+
+            } else {
+
+                document.getElementById("message").innerText =
+                    "Registration failed. Username may already exist.";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+

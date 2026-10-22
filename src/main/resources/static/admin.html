@@ -1,0 +1,1939 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin Dashboard</title>
+
+    <style>
+        :root {
+            --bg: #080e1a;
+            --panel: #111b2c;
+            --panel-light: #18253a;
+            --text: #edf2fa;
+            --muted: #a0aec2;
+            --gold: #f5c542;
+            --border: #29374d;
+            --danger: #ff6b6b;
+            --success: #4ade80;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button, input, textarea, select {
+            font: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 245px;
+            flex-shrink: 0;
+            padding: 25px 16px;
+            background: #0c1423;
+            border-right: 1px solid var(--border);
+        }
+
+        .brand {
+            padding: 8px 10px 26px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .brand h2 {
+            font-size: 21px;
+            color: var(--gold);
+            margin-bottom: 7px;
+        }
+
+        .brand p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .nav-button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 13px 14px;
+            margin-bottom: 7px;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid transparent;
+            border-radius: 9px;
+            transition: 0.2s;
+        }
+
+        .nav-button:hover,
+        .nav-button.active {
+            color: var(--gold);
+            background: var(--panel);
+            border-color: var(--border);
+        }
+
+        .nav-button.logout {
+            margin-top: 25px;
+            color: var(--danger);
+        }
+
+        /* Main content */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+            padding: 30px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topbar h1 {
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .topbar p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .status {
+            padding: 9px 13px;
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--success);
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        .section-heading {
+            margin-bottom: 22px;
+        }
+
+        .section-heading h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Dashboard cards */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            padding: 23px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+        }
+
+        .stat-card p {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card h3 {
+            font-size: 30px;
+            color: var(--gold);
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 24px;
+            margin-bottom: 23px;
+        }
+
+        .panel h3 {
+            font-size: 18px;
+            margin-bottom: 17px;
+        }
+
+        .info-list {
+            display: grid;
+            gap: 13px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Forms */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-bottom: 18px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            color: #dce5f3;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 13px;
+            background: #0b1422;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--gold);
+        }
+
+        textarea {
+            min-height: 115px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+
+        input[type="file"]::file-selector-button {
+            background: var(--panel-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .primary-button,
+        .secondary-button,
+        .danger-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 11px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .primary-button {
+            background: var(--gold);
+            color: #111827;
+        }
+
+        .primary-button:hover {
+            background: #ffda6c;
+        }
+
+        .secondary-button {
+            background: var(--panel-light);
+            border-color: var(--border);
+            color: var(--text);
+        }
+
+        .secondary-button:hover {
+            border-color: var(--gold);
+        }
+
+        .danger-button {
+            background: #3a1720;
+            border-color: #71303b;
+            color: #ffb4b4;
+        }
+
+        .danger-button:hover {
+            background: #57202c;
+        }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* Upload cards */
+
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .upload-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 23px;
+        }
+
+        .upload-panel h3 {
+            font-size: 17px;
+            margin-bottom: 9px;
+        }
+
+        .upload-panel > p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .upload-panel .form-group {
+            margin-bottom: 15px;
+        }
+
+        .upload-panel button {
+            width: 100%;
+        }
+
+        /* Uploaded files */
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .media-card {
+            min-width: 0;
+            overflow: hidden;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .media-preview {
+            height: 190px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0b1422;
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .media-preview img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .file-placeholder {
+            text-align: center;
+            padding: 15px;
+            color: var(--gold);
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .file-placeholder .file-icon {
+            display: block;
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .media-info {
+            padding: 16px;
+        }
+
+        .media-info h4 {
+            font-size: 15px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+            margin-bottom: 8px;
+        }
+
+        .media-meta {
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+            margin-bottom: 14px;
+        }
+
+        .media-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .media-actions a {
+            text-decoration: none;
+        }
+
+        .media-actions .secondary-button,
+        .media-actions .danger-button {
+            flex: 1;
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 35px 20px;
+            text-align: center;
+            color: var(--muted);
+            background: var(--panel);
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .notice {
+            display: none;
+            margin-bottom: 20px;
+            padding: 13px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .notice.show {
+            display: block;
+        }
+
+        .notice.error {
+            color: #ffb4b4;
+            border-color: #71303b;
+            background: #27131a;
+        }
+
+        .notice.success {
+            color: var(--success);
+            border-color: #245b40;
+            background: #10251b;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .footer {
+            color: var(--muted);
+            font-size: 12px;
+            text-align: center;
+            padding: 25px 0 5px;
+        }
+
+        @media (max-width: 1100px) {
+            .media-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                padding: 17px;
+            }
+
+            .brand {
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+            }
+
+            .nav-menu {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 7px;
+            }
+
+            .nav-button {
+                width: auto;
+                margin: 0;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .nav-button.logout {
+                margin-top: 0;
+            }
+
+            .main {
+                padding: 22px 17px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar h1 {
+                font-size: 23px;
+            }
+
+            .panel,
+            .upload-panel {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <h2>Portfolio Admin</h2>
+            <p>Manage your personal website</p>
+        </div>
+
+        <nav class="nav-menu">
+            <button class="nav-button active"
+                    type="button" data-section="dashboard">
+                Dashboard
+            </button>
+
+            <button class="nav-button"
+                    type="button" data-section="profile">
+                My Profile
+            </button>
+
+            <button class="nav-button"
+                    type="button" data-section="projects">
+                Projects
+            </button>
+
+            <button class="nav-button"
+                    type="button" data-section="skills">
+                Skills
+            </button>
+
+            <button class="nav-button"
+                    type="button" data-section="certificates">
+                Certificates
+            </button>
+
+            <button class="nav-button"
+                    type="button" data-section="media">
+                Images & Files
+            </button>
+
+            <button class="nav-button"
+                    type="button" id="logoutButton">
+                Logout
+            </button>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p>Manage your portfolio from one place.</p>
+            </div>
+
+            <div class="status">Administrator area</div>
+        </header>
+
+        <div id="globalNotice" class="notice" role="status"
+             aria-live="polite"></div>
+
+        <!-- DASHBOARD -->
+
+        <section class="page-section active" id="dashboard">
+            <div class="section-heading">
+                <h2>Welcome to your dashboard</h2>
+                <p>
+                    Upload your certificates, update your profile and manage
+                    the files displayed on your portfolio.
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <p>Total uploaded files</p>
+                    <h3 id="totalMediaCount">—</h3>
+                </div>
+
+                <div class="stat-card">
+                    <p>Certificates</p>
+                    <h3 id="certificateCount">—</h3>
+                </div>
+
+                <div class="stat-card">
+                    <p>Photos and project files</p>
+                    <h3 id="otherMediaCount">—</h3>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Quick actions</h3>
+
+                <div class="form-actions">
+                    <button class="primary-button" type="button"
+                            data-go="profile">
+                        Edit Profile
+                    </button>
+
+                    <button class="secondary-button" type="button"
+                            data-go="certificates">
+                        Manage Certificates
+                    </button>
+
+                    <button class="secondary-button" type="button"
+                            data-go="media">
+                        Manage Files
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Important information</h3>
+
+                <div class="info-list">
+                    <p>
+                        <strong>Profile:</strong>
+                        Edit your introduction, education and social links.
+                    </p>
+
+                    <p>
+                        <strong>Certificates:</strong>
+                        Upload the correct certificate and delete incorrect
+                        uploads using the Delete button.
+                    </p>
+
+                    <p>
+                        <strong>File storage:</strong>
+                        Uploaded files are stored on the server, while their
+                        details are saved in MySQL.
+                    </p>
+
+                    <p>
+                        <strong>Security:</strong>
+                        Keep your administrator login credentials private.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILE -->
+
+        <section class="page-section" id="profile">
+            <div class="section-heading">
+                <h2>My Profile</h2>
+                <p>
+                    Update your personal information. Your backend must
+                    support these profile fields.
+                </p>
+            </div>
+
+            <div class="panel">
+                <form id="profileForm">
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="fullName">Full name</label>
+                            <input id="fullName" name="fullName"
+                                   type="text" maxlength="150"
+                                   placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <input id="education" name="education"
+                                   type="text" maxlength="200"
+                                   placeholder="B.E. Computer Science and Engineering">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="introduction">Introduction</label>
+                            <textarea id="introduction" name="introduction"
+                                      maxlength="3000"
+                                      placeholder="Write a short introduction about yourself"></textarea>
+                        </div>
+
+                        <div class="form-group full">
+    <label for="aboutDescription">About Me</label>
+    <textarea
+        id="aboutDescription"
+        name="aboutDescription"
+        maxlength="3000"
+        placeholder="Write more about yourself, your interests, and your goals">
+    </textarea>
+</div>
+
+<div class="form-group full">
+    <label for="currentFocus">Current Learning Focus</label>
+    <textarea
+        id="currentFocus"
+        name="currentFocus"
+        maxlength="1000"
+        placeholder="Describe what you are currently learning">
+    </textarea>
+</div>
+
+                        <div class="form-group full">
+                            <label for="college">College</label>
+                            <input id="college" name="college"
+                                   type="text" maxlength="250"
+                                   placeholder="Enter your college name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="githubUrl">GitHub URL</label>
+                            <input id="githubUrl" name="githubUrl"
+                                   type="url" maxlength="500"
+                                   placeholder="https://github.com/username">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="linkedinUrl">LinkedIn URL</label>
+                            <input id="linkedinUrl" name="linkedinUrl"
+                                   type="url" maxlength="500"
+                                   placeholder="https://linkedin.com/in/username">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="leetcodeUrl">LeetCode URL</label>
+                            <input id="leetcodeUrl" name="leetcodeUrl"
+                                   type="url" maxlength="500"
+                                   placeholder="https://leetcode.com/u/username">
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="primary-button" id="saveProfileButton"
+                                type="submit">
+                            Save Profile
+                        </button>
+
+                        <button class="secondary-button" type="button"
+                                id="reloadProfileButton">
+                            Reload Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        
+        <!-- PROJECTS MANAGEMENT -->
+
+        <section class="page-section" id="projects">
+            <div class="section-heading">
+                <h2>Manage Projects</h2>
+                <p>Add, edit and delete the projects displayed on your public portfolio.</p>
+            </div>
+
+            <div class="panel">
+                <h3 id="projectFormTitle">Add New Project</h3>
+
+                <form id="projectForm">
+                    <input type="hidden" id="projectId">
+
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label for="projectTitle">Project Title</label>
+                            <input id="projectTitle" maxlength="200" required
+                                   placeholder="AI-Based Landslide Early Warning System">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="projectDescription">Description</label>
+                            <textarea id="projectDescription" maxlength="3000" required
+                                      placeholder="Describe what your project does"></textarea>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="projectTechnologies">Technologies</label>
+                            <input id="projectTechnologies" maxlength="1000"
+                                   placeholder="Java, Spring Boot, MySQL">
+                            <p class="help-text">Separate technologies with commas.</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectGithub">GitHub URL</label>
+                            <input id="projectGithub" type="url" maxlength="1000"
+                                   placeholder="https://github.com/username/project">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectDemo">Live Demo URL</label>
+                            <input id="projectDemo" type="url" maxlength="1000"
+                                   placeholder="https://example.com">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="projectImage">Project Image URL (optional)</label>
+                            <input id="projectImage" type="url" maxlength="1000"
+                                   placeholder="https://example.com/image.png">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectOrder">Display Order</label>
+                            <input id="projectOrder" type="number" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="saveProjectButton">
+                            Save Project
+                        </button>
+                        <button class="secondary-button" type="button" id="cancelProjectEdit"
+                                hidden>
+                            Cancel Edit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h3>Saved Projects</h3>
+                <div class="media-grid" id="projectList">
+                    <div class="empty-state">Loading projects...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS MANAGEMENT -->
+
+        <section class="page-section" id="skills">
+            <div class="section-heading">
+                <h2>Manage Skills</h2>
+                <p>Add, edit, categorize and delete skills shown on your public portfolio.</p>
+            </div>
+
+            <div class="panel">
+                <h3 id="skillFormTitle">Add New Skill</h3>
+
+                <form id="skillForm">
+                    <input type="hidden" id="skillId">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="skillName">Skill Name</label>
+                            <input id="skillName" maxlength="150" required
+                                   placeholder="Java">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skillCategory">Category</label>
+                            <select id="skillCategory" required>
+                                <option value="Programming Languages">Programming Languages</option>
+                                <option value="Database">Database</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Frameworks">Frameworks</option>
+                                <option value="Tools">Tools</option>
+                                <option value="Core Computer Science">Core Computer Science</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skillOrder">Display Order</label>
+                            <input id="skillOrder" type="number" value="0">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="primary-button" type="submit" id="saveSkillButton">
+                            Save Skill
+                        </button>
+                        <button class="secondary-button" type="button" id="cancelSkillEdit"
+                                hidden>
+                            Cancel Edit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h3>Saved Skills</h3>
+                <div class="media-grid" id="skillList">
+                    <div class="empty-state">Loading skills...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATES -->
+
+        <section class="page-section" id="certificates">
+            <div class="section-heading">
+                <h2>Certificates</h2>
+                <p>
+                    Upload certificates, preview them and remove incorrect
+                    files. Deletion removes the file and its MySQL record.
+                </p>
+            </div>
+
+            <div class="upload-panel" style="margin-bottom:24px">
+                <h3>Upload a certificate</h3>
+                <p>
+                    Supported formats: PDF, JPG, JPEG, PNG, WEBP and GIF.
+                    Maximum file size: 10 MB.
+                </p>
+
+                <form id="certificateUploadForm">
+                    <div class="form-group">
+                        <label for="certificateTitle">Certificate title</label>
+                        <input id="certificateTitle" name="title"
+                               type="text" maxlength="200" required
+                               placeholder="Example: Java Programming Certificate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="certificateFile">Choose certificate</label>
+                        <input id="certificateFile" name="file"
+                               type="file"
+                               accept=".pdf,.jpg,.jpeg,.png,.webp,.gif"
+                               required>
+                    </div>
+
+                    <button class="primary-button" id="uploadCertificateButton"
+                            type="submit">
+                        Upload Certificate
+                    </button>
+                </form>
+            </div>
+
+            <div class="section-heading">
+                <h2>Uploaded certificates</h2>
+                <p>Use Delete to remove an incorrect certificate.</p>
+            </div>
+
+            <div class="media-grid" id="certificateList">
+                <div class="empty-state">Loading certificates...</div>
+            </div>
+        </section>
+
+        <!-- IMAGES AND FILES -->
+
+        <section class="page-section" id="media">
+            <div class="section-heading">
+                <h2>Images & Files</h2>
+                <p>
+                    Upload photos and project files, view existing uploads
+                    and delete files that you no longer need.
+                </p>
+            </div>
+
+            <div class="upload-panel" style="margin-bottom:25px">
+                <h3>Upload an image or project file</h3>
+                <p>
+                    Choose a category and upload a supported file.
+                    Files are saved on the server and their details in MySQL.
+                </p>
+
+                <form id="mediaUploadForm">
+                    <div class="form-group">
+                        <label for="mediaTitle">File title</label>
+                        <input id="mediaTitle" name="title"
+                               type="text" maxlength="200" required
+                               placeholder="Enter a title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediaCategory">Category</label>
+                        <select id="mediaCategory" name="category" required>
+                            <option value="PHOTO">Photo</option>
+                            <option value="PROJECT">Project</option>
+                            <option value="CERTIFICATE">Certificate</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mediaFile">Choose file</label>
+                        <input id="mediaFile" name="file"
+                               type="file"
+                               accept=".pdf,.jpg,.jpeg,.png,.webp,.gif"
+                               required>
+                        <p class="help-text">
+                            Maximum file size: 10 MB.
+                        </p>
+                    </div>
+
+                    <button class="primary-button" id="uploadMediaButton"
+                            type="submit">
+                        Upload File
+                    </button>
+                </form>
+            </div>
+
+            <div class="section-heading">
+                <h2>All uploaded files</h2>
+                <p>View or delete files from your portfolio storage.</p>
+            </div>
+
+            <div class="media-grid" id="mediaList">
+                <div class="empty-state">Loading files...</div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            Portfolio Admin Dashboard
+        </footer>
+
+    </main>
+</div>
+
+<script>
+   const API = {
+    profile: "/api/admin/profile",
+    media: "/api/admin/media",
+    skills: "/api/admin/skills",
+    projects: "/api/admin/projects",
+    logout: "/api/users/logout"
+};
+    const pageTitles = {
+        dashboard: "Dashboard",
+        profile: "My Profile",
+        projects: "Projects",
+        skills: "Skills",
+        certificates: "Certificates",
+        media: "Images & Files"
+    };
+
+
+const profileFields = [
+    "fullName",
+    "introduction",
+    "aboutDescription",
+    "currentFocus",
+    "education",
+    "college",
+    "githubUrl",
+    "linkedinUrl",
+    "leetcodeUrl"
+];
+
+    let allMedia = [];
+
+    function showNotice(message, type = "success") {
+        const notice = document.getElementById("globalNotice");
+
+        notice.textContent = message;
+        notice.className = "notice show " + type;
+
+        notice.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    }
+
+    function clearNotice() {
+        const notice = document.getElementById("globalNotice");
+        notice.textContent = "";
+        notice.className = "notice";
+    }
+
+    async function apiRequest(url, options = {}) {
+        const response = await fetch(url, {
+            credentials: "same-origin",
+            ...options,
+            headers: {
+                "Accept": "application/json",
+                ...(options.headers || {})
+            }
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            throw new Error(
+                "Access denied or session expired. Please log in again."
+            );
+        }
+
+        return response;
+    }
+
+    function showPage(pageId) {
+    const target = document.getElementById(pageId);
+
+    if (!target || !pageTitles[pageId]) {
+        return;
+    }
+
+    document.querySelectorAll(".page-section").forEach(section => {
+        section.classList.toggle("active", section.id === pageId);
+    });
+
+    document.querySelectorAll(".nav-button[data-section]").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.dataset.section === pageId
+        );
+    });
+
+    document.getElementById("pageTitle").textContent = pageTitles[pageId];
+
+    clearNotice();
+
+    if (pageId === "profile") {
+        loadProfile();
+    }
+
+    if (pageId === "skills") {
+        loadSkills();
+    }
+
+    if (pageId === "projects") {
+        loadProjects();
+    }
+
+    if (pageId === "certificates" || pageId === "media") {
+        loadMedia();
+    }
+
+    if (pageId === "dashboard") {
+        loadMedia();
+    }
+}
+
+document.querySelectorAll(".nav-button[data-section]").forEach(button => {
+    button.addEventListener("click", () => {
+        showPage(button.dataset.section);
+    });
+});
+
+document.querySelectorAll("[data-go]").forEach(button => {
+    button.addEventListener("click", () => {
+        showPage(button.dataset.go);
+    });
+});
+
+    // PROFILE: Load details from the backend.
+
+    async function loadProfile() {
+        const reloadButton = document.getElementById("reloadProfileButton");
+        reloadButton.disabled = true;
+
+        try {
+            const response = await apiRequest(API.profile);
+
+            if (!response.ok) {
+                throw new Error("Could not load profile. HTTP " + response.status);
+            }
+
+            const profile = await response.json();
+
+            profileFields.forEach(field => {
+                const input = document.getElementById(field);
+
+                if (input) {
+                    input.value = profile[field] ?? "";
+                }
+            });
+
+        } catch (error) {
+            showNotice(error.message, "error");
+        } finally {
+            reloadButton.disabled = false;
+        }
+    }
+
+    document.getElementById("reloadProfileButton").addEventListener(
+        "click",
+        loadProfile
+    );
+
+    // PROFILE: Save updated details.
+
+    document.getElementById("profileForm").addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+            clearNotice();
+
+            const button = document.getElementById("saveProfileButton");
+            const originalText = button.textContent;
+
+            const profile = {};
+
+            profileFields.forEach(field => {
+                profile[field] = document.getElementById(field).value.trim();
+            });
+
+            button.disabled = true;
+            button.textContent = "Saving...";
+
+            try {
+                const response = await apiRequest(API.profile, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(profile)
+                });
+
+                if (!response.ok) {
+                    const result = await response.json().catch(() => ({}));
+                    throw new Error(
+                        result.message || "Profile save failed. HTTP " + response.status
+                    );
+                }
+
+                showNotice("Profile saved successfully.");
+
+            } catch (error) {
+                showNotice(error.message, "error");
+            } finally {
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+    );
+
+    // UPLOAD: Shared upload function.
+
+    async function uploadMedia(form, button, category) {
+        const originalText = button.textContent;
+
+        button.disabled = true;
+        button.textContent = "Uploading...";
+        clearNotice();
+
+        try {
+            const formData = new FormData(form);
+
+            // Ensure the category is correct for the selected upload form.
+            formData.set("category", category);
+
+            const file = formData.get("file");
+
+            if (!(file instanceof File) || file.size === 0) {
+                throw new Error("Please choose a file.");
+            }
+
+            const maxSize = 10 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+                throw new Error("Maximum file size is 10 MB.");
+            }
+
+            const response = await apiRequest(API.media, {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                const result = await response.json().catch(() => ({}));
+                throw new Error(
+                    result.message || "Upload failed. HTTP " + response.status
+                );
+            }
+
+            form.reset();
+
+            await loadMedia();
+
+            showNotice("File uploaded successfully.");
+
+        } catch (error) {
+            showNotice(error.message, "error");
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
+    }
+
+    document.getElementById("certificateUploadForm").addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
+
+            uploadMedia(
+                event.currentTarget,
+                document.getElementById("uploadCertificateButton"),
+                "CERTIFICATE"
+            );
+        }
+    );
+
+    document.getElementById("mediaUploadForm").addEventListener(
+        "submit",
+        event => {
+            event.preventDefault();
+
+            const category = document.getElementById("mediaCategory").value;
+
+            uploadMedia(
+                event.currentTarget,
+                document.getElementById("uploadMediaButton"),
+                category
+            );
+        }
+    );
+
+    // MEDIA: Build a safe card for each uploaded file.
+
+    function createElement(tag, className, text) {
+        const element = document.createElement(tag);
+
+        if (className) {
+            element.className = className;
+        }
+
+        if (text !== undefined) {
+            element.textContent = text;
+        }
+
+        return element;
+    }
+
+    function makeMediaCard(item) {
+        const card = createElement("article", "media-card");
+        const preview = createElement("div", "media-preview");
+        const info = createElement("div", "media-info");
+
+        const fileUrl = item.fileUrl;
+
+        const isImage = typeof item.contentType === "string"
+            && item.contentType.startsWith("image/");
+
+        const isPdf = item.contentType === "application/pdf"
+            || (typeof item.originalFileName === "string"
+                && item.originalFileName.toLowerCase().endsWith(".pdf"));
+
+        if (isImage && fileUrl) {
+            const image = document.createElement("img");
+
+            image.src = fileUrl;
+            image.alt = item.title || "Portfolio image";
+            image.loading = "lazy";
+
+            image.addEventListener("error", () => {
+                preview.replaceChildren(
+                    createElement("div", "file-placeholder",
+                        "Image preview unavailable")
+                );
+            });
+
+            preview.appendChild(image);
+        } else {
+            const placeholder = createElement("div", "file-placeholder");
+            placeholder.appendChild(
+                createElement("span", "file-icon", isPdf ? "PDF" : "FILE")
+            );
+            placeholder.appendChild(
+                createElement("span", "", item.originalFileName || "Uploaded file")
+            );
+            preview.appendChild(placeholder);
+        }
+
+        info.appendChild(
+            createElement("h4", "", item.title || "Untitled file")
+        );
+
+        const metadata = createElement(
+            "div",
+            "media-meta",
+            "Category: " + (item.category || "Uncategorized")
+            + "\nFile: " + (item.originalFileName || "Unknown")
+            + "\nID: " + (item.id ?? "Unknown")
+        );
+
+        metadata.style.whiteSpace = "pre-line";
+        info.appendChild(metadata);
+
+        const actions = createElement("div", "media-actions");
+
+        if (fileUrl) {
+            const viewLink = document.createElement("a");
+
+            viewLink.className = "secondary-button";
+            viewLink.href = fileUrl;
+            viewLink.target = "_blank";
+            viewLink.rel = "noopener noreferrer";
+            viewLink.textContent = isImage ? "View Image" : "Open File";
+
+            actions.appendChild(viewLink);
+        }
+
+        // DELETE: Remove the physical file and its database record.
+
+        const deleteButton = createElement(
+            "button",
+            "danger-button",
+            "Delete"
+        );
+
+        deleteButton.type = "button";
+
+        deleteButton.addEventListener("click", async () => {
+            if (item.id === undefined || item.id === null) {
+                showNotice("Cannot delete: the file ID is missing.", "error");
+                return;
+            }
+
+            const fileTitle = item.title
+                || item.originalFileName
+                || "this file";
+
+            const confirmed = window.confirm(
+                'Delete "' + fileTitle + '" permanently?\n\n'
+                + "The file and its database record will be removed."
+            );
+
+            if (!confirmed) {
+                return;
+            }
+
+            deleteButton.disabled = true;
+            deleteButton.textContent = "Deleting...";
+
+            try {
+                const response = await apiRequest(
+                    API.media + "/" + encodeURIComponent(item.id),
+                    {
+                        method: "DELETE"
+                    }
+                );
+
+                if (!response.ok) {
+                    const result = await response.json().catch(() => ({}));
+
+                    throw new Error(
+                        result.message || "Delete failed. HTTP " + response.status
+                    );
+                }
+
+                await loadMedia();
+
+                showNotice('"' + fileTitle + '" was deleted successfully.');
+
+            } catch (error) {
+                showNotice(error.message, "error");
+                deleteButton.disabled = false;
+                deleteButton.textContent = "Delete";
+            }
+        });
+
+        actions.appendChild(deleteButton);
+        info.appendChild(actions);
+        card.append(preview, info);
+
+        return card;
+    }
+
+    // MEDIA: Render both the complete list and certificate list.
+
+    function renderMediaList(container, items, emptyMessage) {
+        container.replaceChildren();
+
+        if (!items.length) {
+            container.appendChild(
+                createElement("div", "empty-state", emptyMessage)
+            );
+            return;
+        }
+
+        items.forEach(item => {
+            container.appendChild(makeMediaCard(item));
+        });
+    }
+
+    async function loadMedia() {
+        const mediaList = document.getElementById("mediaList");
+        const certificateList = document.getElementById("certificateList");
+
+        try {
+            const response = await apiRequest(API.media);
+
+            if (!response.ok) {
+                throw new Error("Could not load files. HTTP " + response.status);
+            }
+
+            const result = await response.json();
+
+            if (!Array.isArray(result)) {
+                throw new Error("The server returned an unexpected file list.");
+            }
+
+            allMedia = result;
+
+            const certificates = allMedia.filter(item =>
+                String(item.category || "").toUpperCase() === "CERTIFICATE"
+            );
+
+            const otherMedia = allMedia.filter(item =>
+                String(item.category || "").toUpperCase() !== "CERTIFICATE"
+            );
+
+            document.getElementById("totalMediaCount").textContent =
+                allMedia.length;
+
+            document.getElementById("certificateCount").textContent =
+                certificates.length;
+
+            document.getElementById("otherMediaCount").textContent =
+                otherMedia.length;
+
+            renderMediaList(
+                mediaList,
+                allMedia,
+                "No files uploaded yet. Upload your first file above."
+            );
+
+            renderMediaList(
+                certificateList,
+                certificates,
+                "No certificates uploaded yet. Upload a certificate above."
+            );
+
+        } catch (error) {
+            const message = error.message || "Could not load files.";
+
+            mediaList.replaceChildren(
+                createElement("div", "empty-state", message)
+            );
+
+            certificateList.replaceChildren(
+                createElement("div", "empty-state", message)
+            );
+
+            showNotice(message, "error");
+        }
+    }
+
+    // LOGOUT
+
+    document.getElementById("logoutButton").addEventListener(
+        "click",
+        async () => {
+            const button = document.getElementById("logoutButton");
+
+            if (!confirm("Are you sure you want to log out?")) {
+                return;
+            }
+
+            button.disabled = true;
+
+            try {
+                const response = await apiRequest(API.logout, {
+                    method: "POST"
+                });
+
+                if (!response.ok) {
+                    throw new Error("Logout failed. HTTP " + response.status);
+                }
+
+                window.location.replace("/login.html");
+
+            } catch (error) {
+                showNotice(error.message, "error");
+                button.disabled = false;
+            }   
+        }
+    );
+
+    
+    
+    // SKILLS: Load and display skills.
+
+    async function loadSkills() {
+        const list = document.getElementById("skillList");
+        list.replaceChildren(createElement("div", "empty-state", "Loading skills..."));
+
+        try {
+            const response = await apiRequest(API.skills);
+
+            if (!response.ok) {
+                throw new Error("Could not load skills. HTTP " + response.status);
+            }
+
+            const skills = await response.json();
+
+            if (!Array.isArray(skills)) {
+                throw new Error("Unexpected skills response.");
+            }
+
+            list.replaceChildren();
+
+            if (skills.length === 0) {
+                list.appendChild(createElement(
+                    "div", "empty-state", "No skills yet. Add your first skill above."
+                ));
+                return;
+            }
+
+            skills.forEach(skill => {
+                const card = createElement("article", "media-card");
+                const info = createElement("div", "media-info");
+
+                info.appendChild(createElement("h4", "", skill.name || "Unnamed skill"));
+
+                const meta = createElement(
+                    "div", "media-meta",
+                    "Category: " + (skill.category || "Other")
+                    + "\nDisplay order: " + (skill.displayOrder ?? 0)
+                );
+                meta.style.whiteSpace = "pre-line";
+                info.appendChild(meta);
+
+                const actions = createElement("div", "media-actions");
+
+                const edit = createElement("button", "secondary-button", "Edit");
+                edit.type = "button";
+                edit.addEventListener("click", () => {
+                    document.getElementById("skillId").value = skill.id;
+                    document.getElementById("skillName").value = skill.name || "";
+                    document.getElementById("skillCategory").value =
+                        skill.category || "Other";
+                    document.getElementById("skillOrder").value =
+                        skill.displayOrder ?? 0;
+
+                    document.getElementById("skillFormTitle").textContent = "Edit Skill";
+                    document.getElementById("saveSkillButton").textContent = "Update Skill";
+                    document.getElementById("cancelSkillEdit").hidden = false;
+                    document.getElementById("skillForm").scrollIntoView({
+                        behavior: "smooth", block: "start"
+                    });
+                });
+
+                const del = createElement("button", "danger-button", "Delete");
+                del.type = "button";
+                del.addEventListener("click", async () => {
+                    if (!confirm('Delete skill "' + skill.name + '"?')) return;
+
+                    del.disabled = true;
+                    try {
+                        const result = await apiRequest(
+                            API.skills + "/" + encodeURIComponent(skill.id),
+                            { method: "DELETE" }
+                        );
+
+                        if (!result.ok) {
+                            throw new Error("Skill deletion failed. HTTP " + result.status);
+                        }
+
+                        await loadSkills();
+                        showNotice("Skill deleted successfully.");
+                    } catch (error) {
+                        showNotice(error.message, "error");
+                        del.disabled = false;
+                    }
+                });
+
+                actions.append(edit, del);
+                info.appendChild(actions);
+                card.appendChild(info);
+                list.appendChild(card);
+            });
+        } catch (error) {
+            list.replaceChildren(createElement("div", "empty-state", error.message));
+            showNotice(error.message, "error");
+        }
+    }
+
+    function resetSkillForm() {
+        document.getElementById("skillForm").reset();
+        document.getElementById("skillId").value = "";
+        document.getElementById("skillOrder").value = "0";
+        document.getElementById("skillFormTitle").textContent = "Add New Skill";
+        document.getElementById("saveSkillButton").textContent = "Save Skill";
+        document.getElementById("cancelSkillEdit").hidden = true;
+    }
+
+    document.getElementById("cancelSkillEdit").addEventListener("click", resetSkillForm);
+
+    document.getElementById("skillForm").addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const id = document.getElementById("skillId").value;
+        const payload = {
+            name: document.getElementById("skillName").value.trim(),
+            category: document.getElementById("skillCategory").value,
+            displayOrder: Number(document.getElementById("skillOrder").value || 0)
+        };
+
+        const button = document.getElementById("saveSkillButton");
+        button.disabled = true;
+
+        try {
+            const response = await apiRequest(
+                id ? API.skills + "/" + encodeURIComponent(id) : API.skills,
+                {
+                    method: id ? "PUT" : "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Saving skill failed. HTTP " + response.status);
+            }
+
+            resetSkillForm();
+            await loadSkills();
+            showNotice(id ? "Skill updated successfully." : "Skill added successfully.");
+        } catch (error) {
+            showNotice(error.message, "error");
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+
+    // PROJECTS: Load and display projects.
+
+    async function loadProjects() {
+        const list = document.getElementById("projectList");
+        list.replaceChildren(createElement("div", "empty-state", "Loading projects..."));
+
+        try {
+            const response = await apiRequest(API.projects);
+
+            if (!response.ok) {
+                throw new Error("Could not load projects. HTTP " + response.status);
+            }
+
+            const projects = await response.json();
+
+            if (!Array.isArray(projects)) {
+                throw new Error("Unexpected projects response.");
+            }
+
+            list.replaceChildren();
+
+            if (projects.length === 0) {
+                list.appendChild(createElement(
+                    "div", "empty-state", "No projects yet. Add your first project above."
+                ));
+                return;
+            }
+
+            projects.forEach(project => {
+                const card = createElement("article", "media-card");
+                const info = createElement("div", "media-info");
+
+                info.appendChild(createElement("h4", "", project.title || "Untitled project"));
+
+                const meta = createElement(
+                    "div", "media-meta",
+                    (project.description || "No description")
+                    + "\nTechnologies: " + (project.technologies || "Not specified")
+                );
+                meta.style.whiteSpace = "pre-line";
+                info.appendChild(meta);
+
+                const actions = createElement("div", "media-actions");
+
+                const edit = createElement("button", "secondary-button", "Edit");
+                edit.type = "button";
+                edit.addEventListener("click", () => {
+                    document.getElementById("projectId").value = project.id;
+                    document.getElementById("projectTitle").value = project.title || "";
+                    document.getElementById("projectDescription").value =
+                        project.description || "";
+                    document.getElementById("projectTechnologies").value =
+                        project.technologies || "";
+                    document.getElementById("projectGithub").value = project.githubUrl || "";
+                    document.getElementById("projectDemo").value = project.demoUrl || "";
+                    document.getElementById("projectImage").value = project.imageUrl || "";
+                    document.getElementById("projectOrder").value =
+                        project.displayOrder ?? 0;
+
+                    document.getElementById("projectFormTitle").textContent = "Edit Project";
+                    document.getElementById("saveProjectButton").textContent = "Update Project";
+                    document.getElementById("cancelProjectEdit").hidden = false;
+                    document.getElementById("projectForm").scrollIntoView({
+                        behavior: "smooth", block: "start"
+                    });
+                });
+
+                const del = createElement("button", "danger-button", "Delete");
+                del.type = "button";
+                del.addEventListener("click", async () => {
+                    if (!confirm('Delete project "' + project.title + '"?')) return;
+
+                    del.disabled = true;
+                    try {
+                        const result = await apiRequest(
+                            API.projects + "/" + encodeURIComponent(project.id),
+                            { method: "DELETE" }
+                        );
+
+                        if (!result.ok) {
+                            throw new Error("Project deletion failed. HTTP " + result.status);
+                        }
+
+                        await loadProjects();
+                        showNotice("Project deleted successfully.");
+                    } catch (error) {
+                        showNotice(error.message, "error");
+                        del.disabled = false;
+                    }
+                });
+
+                actions.append(edit, del);
+                info.appendChild(actions);
+                card.appendChild(info);
+                list.appendChild(card);
+            });
+        } catch (error) {
+            list.replaceChildren(createElement("div", "empty-state", error.message));
+            showNotice(error.message, "error");
+        }
+    }
+
+    function resetProjectForm() {
+        document.getElementById("projectForm").reset();
+        document.getElementById("projectId").value = "";
+        document.getElementById("projectOrder").value = "0";
+        document.getElementById("projectFormTitle").textContent = "Add New Project";
+        document.getElementById("saveProjectButton").textContent = "Save Project";
+        document.getElementById("cancelProjectEdit").hidden = true;
+    }
+
+    document.getElementById("cancelProjectEdit").addEventListener(
+        "click", resetProjectForm
+    );
+
+    document.getElementById("projectForm").addEventListener("submit", async event => {
+        event.preventDefault();
+
+        const id = document.getElementById("projectId").value;
+        const payload = {
+            title: document.getElementById("projectTitle").value.trim(),
+            description: document.getElementById("projectDescription").value.trim(),
+            technologies: document.getElementById("projectTechnologies").value.trim(),
+            githubUrl: document.getElementById("projectGithub").value.trim(),
+            demoUrl: document.getElementById("projectDemo").value.trim(),
+            imageUrl: document.getElementById("projectImage").value.trim(),
+            displayOrder: Number(document.getElementById("projectOrder").value || 0)
+        };
+
+        const button = document.getElementById("saveProjectButton");
+        button.disabled = true;
+
+        try {
+            const response = await apiRequest(
+                id ? API.projects + "/" + encodeURIComponent(id) : API.projects,
+                {
+                    method: id ? "PUT" : "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Saving project failed. HTTP " + response.status);
+            }
+
+            resetProjectForm();
+            await loadProjects();
+            showNotice(id ? "Project updated successfully." : "Project added successfully.");
+        } catch (error) {
+            showNotice(error.message, "error");
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+
+    // Initial dashboard data.
+
+    loadMedia();
+</script>
+
+</body>
+</html>

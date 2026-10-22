@@ -1076,12 +1076,13 @@
     }
 }
 
-/* Keep the Hero heading on one line */
+/* Responsive hero heading */
 .hero-content h1 {
-    white-space: nowrap;
-    font-size: clamp(24px, 3vw, 42px);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    line-height: 1.15;
 }
-
 /* Mobile Responsive Fix */
 @media screen and (max-width: 768px) {
 
@@ -1105,6 +1106,66 @@
     header,
     footer {
         max-width: 100%;
+    }
+}
+
+/* Final mobile layout overrides */
+@media screen and (max-width: 700px) {
+    .hero-grid,
+    .about-grid,
+    .skills-grid,
+    .projects-grid,
+    .certificates-grid,
+    .contact-panel {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero-content,
+    .hero-panel,
+    .card {
+        min-width: 0;
+    }
+
+    .code-profile-card {
+        justify-self: center;
+        max-width: 100%;
+    }
+
+    .code-content {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .hero h1,
+    .hero-content h1 {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 92%;
+    }
+
+    .section {
+        padding: 48px 0;
+    }
+
+    .hero {
+        padding: 45px 0;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .nav-inner {
+        gap: 12px;
+    }
+
+    .brand {
+        font-size: 1rem;
     }
 }
 
